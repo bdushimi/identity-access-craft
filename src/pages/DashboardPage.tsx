@@ -1,9 +1,10 @@
-
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import LogoutConfirmationDialog from "@/components/LogoutConfirmationDialog";
+import NotificationBell from "@/components/NotificationBell";
+import NotificationDemo from "@/components/NotificationDemo";
 import { 
   LogOut, 
   UserRound, 
@@ -94,7 +95,8 @@ const DashboardPage = () => {
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <h1 className="text-3xl font-bold">Dashboard</h1>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
+            <NotificationBell />
             <Link to="/calendar">
               <Button variant="outline" className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
@@ -116,8 +118,9 @@ const DashboardPage = () => {
           <Card className="col-span-1 md:col-span-4">
             <CardHeader className="pb-2">
               <CardTitle>Welcome back, {user?.name}</CardTitle>
-              <CardDescription>
-                Here's an overview of your leave information
+              <CardDescription className="flex justify-between items-center">
+                <span>Here's an overview of your leave information</span>
+                <NotificationDemo />
               </CardDescription>
             </CardHeader>
           </Card>
