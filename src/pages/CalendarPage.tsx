@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -207,9 +206,8 @@ const CalendarPage = () => {
           className="rounded-md border shadow"
           classNames={{
             day_today: "bg-slate-100",
-            day: (props) => {
-              const dayDate = props.date;
-              return getDayClass(dayDate);
+            day: (dayProps) => {
+              return getDayClass(dayProps.date);
             }
           }}
           components={{
