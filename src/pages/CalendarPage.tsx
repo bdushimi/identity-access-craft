@@ -167,7 +167,7 @@ const CalendarPage = () => {
     return rwandanHolidays.find(holiday => isSameDay(holiday.date, date));
   };
   
-  // Function to generate the calendar day class
+  // Function to get day class based on leave records and holidays
   const getDayClass = (date: Date) => {
     const leaveRecords = getLeaveRecordsForDate(date);
     const isHoliday = getHolidayForDate(date);
@@ -206,20 +206,18 @@ const CalendarPage = () => {
           className="rounded-md border shadow"
           classNames={{
             day_today: "bg-slate-100",
-            day: (dayProps) => {
-              return getDayClass(dayProps.date);
-            }
           }}
           components={{
             DayContent: (props) => {
               const dayDate = props.date;
               const leaveRecords = getLeaveRecordsForDate(dayDate);
               const holiday = getHolidayForDate(dayDate);
+              const dayClass = getDayClass(dayDate);
               
               return (
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <div className="w-full h-full flex items-center justify-center">
+                    <div className={`w-full h-full flex items-center justify-center ${dayClass}`}>
                       {props.date.getDate()}
                       {leaveRecords.length > 0 && <span className="ml-1 w-1 h-1 bg-blue-500 rounded-full"></span>}
                       {holiday && <span className="ml-1 w-1 h-1 bg-red-500 rounded-full"></span>}
