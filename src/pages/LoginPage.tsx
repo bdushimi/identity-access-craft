@@ -1,4 +1,3 @@
-
 import { useState, FormEvent } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -27,7 +26,7 @@ const LoginPage = () => {
   const [passwordError, setPasswordError] = useState("");
 
   const { login, loginWithAzure, isLoading, error } = useAuth();
-  const isProduction = process.env.NODE_ENV === "production";
+  const isProduction = import.meta.env.PROD; // Using Vite's environment variable
 
   const validateEmail = (email: string) => {
     if (!email) return "Email is required";
@@ -88,111 +87,110 @@ const LoginPage = () => {
             <span>Sign in with Microsoft</span>
           </Button>
 
-          {!isProduction && (
-            <>
-              <div className="relative flex items-center">
-                <div className="flex-grow border-t border-gray-300"></div>
-                <span className="flex-shrink mx-4 text-xs text-gray-500">OR</span>
-                <div className="flex-grow border-t border-gray-300"></div>
+          {/* Display local login form regardless of environment in this demo version */}
+          <>
+            <div className="relative flex items-center">
+              <div className="flex-grow border-t border-gray-300"></div>
+              <span className="flex-shrink mx-4 text-xs text-gray-500">OR</span>
+              <div className="flex-grow border-t border-gray-300"></div>
+            </div>
+
+            {/* Local Login Form */}
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="name@example.com"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (emailError) setEmailError("");
+                  }}
+                  className={emailError ? "border-red-500" : ""}
+                  disabled={isLoading}
+                />
+                {emailError && (
+                  <p className="text-red-500 text-xs">{emailError}</p>
+                )}
               </div>
 
-              {/* Local Login Form */}
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="name@example.com"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      if (emailError) setEmailError("");
-                    }}
-                    className={emailError ? "border-red-500" : ""}
-                    disabled={isLoading}
-                  />
-                  {emailError && (
-                    <p className="text-red-500 text-xs">{emailError}</p>
-                  )}
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <Label htmlFor="password">Password</Label>
-                    <Link
-                      to="/forgot-password"
-                      className="text-xs text-blue-600 hover:underline"
-                    >
-                      Forgot password?
-                    </Link>
-                  </div>
-                  <div className="relative">
-                    <Input
-                      id="password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="••••••••"
-                      value={password}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                        if (passwordError) setPasswordError("");
-                      }}
-                      className={passwordError ? "border-red-500 pr-10" : "pr-10"}
-                      disabled={isLoading}
-                    />
-                    <button
-                      type="button"
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                      onClick={togglePasswordVisibility}
-                    >
-                      {showPassword ? (
-                        <EyeOff size={18} />
-                      ) : (
-                        <Eye size={18} />
-                      )}
-                    </button>
-                  </div>
-                  {passwordError && (
-                    <p className="text-red-500 text-xs">{passwordError}</p>
-                  )}
-                </div>
-
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="remember-me"
-                    checked={rememberMe}
-                    onCheckedChange={(checked) =>
-                      setRememberMe(checked === true)
-                    }
-                    disabled={isLoading}
-                  />
-                  <Label
-                    htmlFor="remember-me"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <Label htmlFor="password">Password</Label>
+                  <Link
+                    to="/forgot-password"
+                    className="text-xs text-blue-600 hover:underline"
                   >
-                    Remember me
-                  </Label>
+                    Forgot password?
+                  </Link>
                 </div>
-
-                <Button
-                  type="submit"
-                  className="w-full"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                  ) : null}
-                  {isLoading ? "Signing in..." : "Sign In"}
-                </Button>
-
-                {error && (
-                  <p className="text-red-500 text-sm text-center">
-                    {error}
-                  </p>
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      if (passwordError) setPasswordError("");
+                    }}
+                    className={passwordError ? "border-red-500 pr-10" : "pr-10"}
+                    disabled={isLoading}
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? (
+                      <EyeOff size={18} />
+                    ) : (
+                      <Eye size={18} />
+                    )}
+                  </button>
+                </div>
+                {passwordError && (
+                  <p className="text-red-500 text-xs">{passwordError}</p>
                 )}
-              </form>
-            </>
-          )}
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="remember-me"
+                  checked={rememberMe}
+                  onCheckedChange={(checked) =>
+                    setRememberMe(checked === true)
+                  }
+                  disabled={isLoading}
+                />
+                <Label
+                  htmlFor="remember-me"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                >
+                  Remember me
+                </Label>
+              </div>
+
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                ) : null}
+                {isLoading ? "Signing in..." : "Sign In"}
+              </Button>
+
+              {error && (
+                <p className="text-red-500 text-sm text-center">
+                  {error}
+                </p>
+              )}
+            </form>
+          </>
         </div>
 
         <div className="text-center text-sm text-gray-500">
