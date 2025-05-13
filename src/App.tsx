@@ -11,6 +11,7 @@ import Index from "./pages/Index";
 import LoginPage from "./pages/LoginPage";
 import DashboardPage from "./pages/DashboardPage";
 import CalendarPage from "./pages/CalendarPage";
+import LeaveRequestPage from "./pages/LeaveRequestPage";
 import NotFound from "./pages/NotFound";
 
 // Create a client
@@ -34,6 +35,11 @@ const App = () => {
                 <Route path="/calendar" element={
                   <ProtectedRoute>
                     <CalendarPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/request-leave" element={
+                  <ProtectedRoute>
+                    <LeaveRequestPage />
                   </ProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />

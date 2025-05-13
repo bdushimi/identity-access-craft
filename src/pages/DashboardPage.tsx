@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LogoutConfirmationDialog from "@/components/LogoutConfirmationDialog";
 import NotificationBell from "@/components/NotificationBell";
 import NotificationDemo from "@/components/NotificationDemo";
@@ -53,6 +53,7 @@ const recentRequests = [
 const DashboardPage = () => {
   const { user, logout } = useAuth();
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
@@ -60,10 +61,7 @@ const DashboardPage = () => {
   };
 
   const handleRequestLeave = () => {
-    toast({
-      title: "Request Leave",
-      description: "Leave request feature is coming soon!",
-    });
+    navigate("/request-leave");
   };
 
   const getStatusBadge = (status: string) => {
