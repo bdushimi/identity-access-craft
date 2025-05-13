@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import LogoutConfirmationDialog from "@/components/LogoutConfirmationDialog";
 import { 
   LogOut, 
@@ -11,7 +12,8 @@ import {
   Clock, 
   Plus, 
   Package,
-  ArrowRight 
+  ArrowRight,
+  Calendar
 } from "lucide-react";
 import { 
   Card, 
@@ -92,14 +94,22 @@ const DashboardPage = () => {
       <div className="max-w-6xl mx-auto space-y-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <h1 className="text-3xl font-bold">Dashboard</h1>
-          <Button
-            variant="outline"
-            className="flex items-center gap-2"
-            onClick={() => setIsLogoutDialogOpen(true)}
-          >
-            <LogOut className="h-4 w-4" />
-            Sign out
-          </Button>
+          <div className="flex gap-2">
+            <Link to="/calendar">
+              <Button variant="outline" className="flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                View Calendar
+              </Button>
+            </Link>
+            <Button
+              variant="outline"
+              className="flex items-center gap-2"
+              onClick={() => setIsLogoutDialogOpen(true)}
+            >
+              <LogOut className="h-4 w-4" />
+              Sign out
+            </Button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
